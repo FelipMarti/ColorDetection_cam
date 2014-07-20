@@ -5,7 +5,6 @@ LDFLAGS+=`pkg-config --libs opencv`
 PROG=color_detection_cam
 OBJS=$(PROG).o
 
-.PHONY: all clean
 $(PROG): $(OBJS)
 	$(CC) -o $(PROG) $(OBJS) $(LDFLAGS)
 
