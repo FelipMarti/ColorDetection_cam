@@ -9,9 +9,9 @@ int main(int argc, char **argv)
 	cv::VideoCapture cap(0);
 
 	// If not success, exit program
-	if (!cap.isOpened()) {	
+	if (!cap.isOpened()) {
 		cout << "Cannot open the web cam" << endl;
-		return -1;
+		return 1;
 	}
 
 	// Create a window called "Control"
@@ -39,19 +39,16 @@ int main(int argc, char **argv)
 	cv::createTrackbar("LowV", "Control", &iLowV, 255);
 	cv::createTrackbar("HighV", "Control", &iHighV, 255);
 
-	cv::Mat imgOriginal;
-	cv::Mat imgHSV;
-	cv::Mat imgThresholded;
-
 	while (true) {
 
-		// Read a new frame from video
-		bool bSuccess = cap.read(imgOriginal);
+		cv::Mat imgOriginal;
+		cv::Mat imgHSV;
+		cv::Mat imgThresholded;
 
-		if (!bSuccess)	// if not success, break loop
-		{
+		// Read a new frame from video
+		if (!cap.read(imgOriginal)) {
 			cout << "Cannot read a frame from video stream" << endl;
-			break;
+			return 1;
 		}
 
 		// Convert the captured frame from BGR to HSV
@@ -86,11 +83,12 @@ int main(int argc, char **argv)
 		// Wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		if (cv::waitKey(30) == 27) {
 			cout << "esc key is pressed by user" << endl;
-			break;
+			cvDestroyWindow("Control");
+			cvDestroyWindow("Original");
+			cvDestroyWindow("Thresholded Image");
+			return 0;
 		}
 
 	}
-
-	return 0;
 
 }
