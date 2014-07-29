@@ -83,9 +83,6 @@ int main(int argc, char **argv)
 		// Wait for 'esc' key press for 30ms. If 'esc' key is pressed, break loop
 		if (cv::waitKey(30) == 27) {
 			cout << "esc key is pressed by user" << endl;
-			cvDestroyWindow("Control");
-			cvDestroyWindow("Original");
-			cvDestroyWindow("Thresholded Image");
 			return 0;
 		}
 
